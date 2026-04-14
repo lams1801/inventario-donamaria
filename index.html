@@ -628,7 +628,7 @@ function resetApp() {
 }
 
 var sections = [
-  { id:'congelados', name:'CONGELADOS', products:[
+  { id:'congelados', name:'COMIDAS', products:[
     {name:'Pizza 5 Quesos',    inicio:6,  cajasUnid:6},
     {name:'Pizza Barbacoa',    inicio:6,  cajasUnid:6},
     {name:'Pizza York',        inicio:6,  cajasUnid:6},
@@ -639,15 +639,6 @@ var sections = [
     {name:'Papas Gajo',        inicio:10, cajasUnid:0},
     {name:'Salmon Blister',    inicio:2,  cajasUnid:0},
     {name:'Mejillones Cubos',    inicio:2,  cajasUnid:0}
-  ]},
-  { id:'postres', name:'POSTRES CONGELADOS', products:[
-    {name:'Brownie',              inicio:0,  cajasUnid:0},
-    {name:'Coulant',              inicio:12, cajasUnid:0},
-    {name:'Helado de Vainilla',   inicio:12, cajasUnid:0},
-    {name:'Helado de Pistacho',   inicio:6,  cajasUnid:0},
-    {name:'Terrina de Chocolate', inicio:0,  cajasUnid:0},
-    {name:'Torrijas',             inicio:0,  cajasUnid:0},
-    {name:'Fabada',               inicio:0,  cajasUnid:0}
   ]},
   { id:'comidas', name:'COMIDAS CONGELADAS', products:[
     {name:'Tortellinis',               inicio:12, cajasUnid:0},
@@ -673,7 +664,7 @@ var sections = [
     {name:'Croquetas de Jamon',         inicio:0,  cajasUnid:0},
     {name:'Tortillas Peq',              inicio:0,  cajasUnid:0}
   ]},
-  { id:'otros', name:'OTROS', products:[
+  { id:'otros', name:'CREMAS - CHACINAS - QUESOS', products:[
     {name:'Crema Calabacin',    inicio:6,  cajasUnid:0},
     {name:'Crema Calabaza',     inicio:6,  cajasUnid:0},
     {name:'Crema Boletus',      inicio:0,  cajasUnid:0},
@@ -684,6 +675,15 @@ var sections = [
     {name:'Queso Racion',       inicio:8,  cajasUnid:0},
     {name:'Jamon Racion',       inicio:8,  cajasUnid:0},
     {name:'Jamon Media Racion', inicio:8,  cajasUnid:0}
+  ]},
+  { id:'postres', name:'POSTRES', products:[
+    {name:'Brownie',              inicio:0,  cajasUnid:0},
+    {name:'Coulant',              inicio:12, cajasUnid:0},
+    {name:'Helado de Vainilla',   inicio:12, cajasUnid:0},
+    {name:'Helado de Pistacho',   inicio:6,  cajasUnid:0},
+    {name:'Terrina de Chocolate', inicio:0,  cajasUnid:0},
+    {name:'Torrijas',             inicio:0,  cajasUnid:0},
+    {name:'Fabada',               inicio:0,  cajasUnid:0}
   ]},
   { id:'salsas', name:'SALSAS y OTROS', products:[
     {name:'Salsa Cesar',            inicio:4, cajasUnid:0},
@@ -715,6 +715,10 @@ window.onload = function() {
     document.head.appendChild(al);
   }
   if (!loadData()) { /* first run - use defaults */ }
+  var defaultNames = {'congelados':'COMIDAS','postres':'POSTRES','comidas':'COMIDAS CONGELADAS','otros':'CREMAS - CHACINAS - QUESOS','salsas':'SALSAS y OTROS'};
+  var defaultOrder = ['congelados','comidas','otros','postres','salsas'];
+  sections.forEach(function(sec){ if (defaultNames[sec.id]) sec.name = defaultNames[sec.id]; });
+  sections.sort(function(a,b){ return defaultOrder.indexOf(a.id) - defaultOrder.indexOf(b.id); });
   renderAll();
 };
 
@@ -777,7 +781,7 @@ function renderAll() {
       c.appendChild(div);
     });
     if (!any) {
-      c.innerHTML='<div class="empty-state"><strong>Todo en orden</strong><p>No hay productos bajo mínimo.<br>Completa primero el inventario de Existencias.</p></div>';
+      c.innerHTML='<div class="empty-state"><strong>Todo en orden</strong><p>No hay productos bajo minimo.<br>Completa primero el inventario de Pedido o Existencias.</p></div>';
     }
   } else {
     sections.forEach(function(sec,si){
@@ -858,7 +862,6 @@ function makeRow(si,pi) {
     grp.appendChild(makeInput(si,pi,'existencias'));
     grp.appendChild(makeInput(si,pi,'baja'));
   } else if (currentMode==='rapido') {
-    // Show existencias value read-only + pedido input
     var exVal = values[key(si,pi,'existencias')] || values[key(si,pi,'almacen')] || '-';
     var exWrap = document.createElement('div'); exWrap.className='fwrap';
     var exDisp = document.createElement('div');
@@ -995,8 +998,8 @@ function updateActionBar(){
       +'<button class="abtn wa" onclick="shareWA()">WhatsApp PDF</button>'
       +'<button class="abtn cl" onclick="clearAll()">Limpiar</button>';
   } else if (currentMode==='pedido'){
-    bar.innerHTML='<button class="abtn gp" onclick="showPedido()">Generar Pedido</button>'
-      +'<button class="abtn wa" onclick="shareWA()">WhatsApp PDF</button>'
+    bar.innerHTML='<button class="abtn gp" onclick="rapPDF()">Generar PDF</button>'
+      +'<button class="abtn wa" onclick="rapWA()">WhatsApp PDF</button>'
       +'<button class="abtn cl" onclick="clearAll()">Limpiar</button>';
   } else {
     bar.innerHTML='<button class="abtn gp" onclick="rapPDF()">Generar PDF</button>'
@@ -1089,20 +1092,15 @@ function rapWA(){
 }
 
 function shareWA(){
-  if (currentMode==='existencias'){
-    pdfMode='existencias';
-  } else {
-    pdfMode=currentMode;
-  }
+  pdfMode = (currentMode==='existencias') ? 'existencias' : currentMode;
   sharePDFviaWA();
 }
 
 function sharePDFviaWA(){
   if (typeof window.jspdf==='undefined'){
-    alert('La librería PDF no está cargada. Necesitas conexión a internet.');
+    alert('La libreria PDF no esta cargada.');
     return;
   }
-  // Build PDF same as generatePDF but return blob
   var doc=new window.jspdf.jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
   var W=210, margin=14;
   var por=document.getElementById('realizadoPor').value||'--';
@@ -1111,33 +1109,26 @@ function sharePDFviaWA(){
   var tipo=pdfMode;
   var isExist=(tipo==='existencias');
   var isR=(tipo==='rapido');
-
-  var titulo=isExist?'INVENTARIO DE EXISTENCIAS':(isR?'PEDIDO RÁPIDO':'LISTA DE PEDIDO');
-  doc.setFillColor(26,39,68);
-  doc.rect(0,0,W,36,'F');
+  var titulo=isExist?'INVENTARIO DE EXISTENCIAS':(isR?'PEDIDO RAPIDO':'LISTA DE PEDIDO');
+  doc.setFillColor(26,39,68); doc.rect(0,0,W,36,'F');
   doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(232,201,122);
   doc.text('DONA MARIA HOTEL',W/2,13,{align:'center'});
   doc.setFontSize(9); doc.setTextColor(200,210,230);
-  doc.text('Ático 17 / Terraza',W/2,20,{align:'center'});
+  doc.text('Atico 17 / Terraza',W/2,20,{align:'center'});
   doc.setFontSize(11); doc.setTextColor(255,255,255);
   doc.text(titulo,W/2,28,{align:'center'});
   doc.setTextColor(180,190,210); doc.setFontSize(8); doc.setFont('helvetica','normal');
   doc.text('Fecha: '+fecha+'   |   Por: '+por,W/2,34,{align:'center'});
-
-  var y=44, lineH=5.5, secH=7;
-  var pageH=285;
-
+  var y=44, lineH=5.5, secH=7, pageH=285;
   sections.forEach(function(sec,si){
     var rows=[];
     sec.products.forEach(function(p,pi){
       if (isR){
         var s=getStatus(si,pi);
-        if (s!=='warn'&&s!=='danger') return;
+        if (s!=='warn' && s!=='danger') return;
         var ped=parseFloat(values[key(si,pi,'pedido')]);
         if (isNaN(ped)||ped<=0) return;
-        var qStr=String(ped);
-        // no cajasUnid suffix
-        rows.push({name:p.name, c1:values[key(si,pi,'existencias')]||'-', c2:qStr});
+        rows.push({name:p.name, c1:values[key(si,pi,'existencias')]||'-', c2:String(ped)});
       } else if (isExist){
         var ex=values[key(si,pi,'existencias')];
         var ba=values[key(si,pi,'baja')];
@@ -1147,21 +1138,17 @@ function sharePDFviaWA(){
         var al=values[key(si,pi,'almacen')];
         var ped2=parseFloat(values[key(si,pi,'pedido')]);
         if (!al&&isNaN(ped2)) return;
-        var qStr2=isNaN(ped2)?'0':String(ped2);
-        // no box suffix
-        rows.push({name:p.name, c1:al||'-', c2:qStr2});
+        rows.push({name:p.name, c1:al||'-', c2:isNaN(ped2)?'0':String(ped2)});
       }
     });
     if (!rows.length) return;
     if (y+secH+lineH*rows.length>pageH){ doc.addPage(); y=14; }
     doc.setFillColor(26,39,68); doc.rect(margin,y-4,W-margin*2,secH,'F');
     doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(232,201,122);
-    doc.text(sec.name,margin+2,y+1);
-    y+=secH+1;
-    var hdr1=isExist?'Existencias':(isR?'Exist.':'Almén');
-    var hdr2=isExist?'Baja':'Pedido';
+    doc.text(sec.name,margin+2,y+1); y+=secH+1;
+    var hdr1=isExist?'Existencias':(isR?'Exist.':'Alm.');
     doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(90,106,138);
-    doc.text('PRODUCTO',margin+1,y); doc.text(hdr1,145,y,{align:'right'}); doc.text(hdr2,W-margin,y,{align:'right'});
+    doc.text('PRODUCTO',margin+1,y); doc.text(hdr1,145,y,{align:'right'}); doc.text('Pedido',W-margin,y,{align:'right'});
     y+=3; doc.setDrawColor(200,210,230); doc.line(margin,y,W-margin,y); y+=2;
     rows.forEach(function(r,i){
       if (y+lineH>pageH){ doc.addPage(); y=14; }
@@ -1176,23 +1163,19 @@ function sharePDFviaWA(){
     y+=3;
   });
   if (nota){ if(y+10>pageH){doc.addPage();y=14;} doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(90,106,138); doc.text('Nota: '+nota,margin,y); }
-
   var fn=(isExist?'inventario':'pedido')+'-donamaria-'+fecha+'.pdf';
-
-  // Try Web Share API with file (works on Android Chrome)
   try {
     var blob = doc.output('blob');
     var file = new File([blob], fn, {type:'application/pdf'});
     if (navigator.canShare && navigator.canShare({files:[file]})){
-      navigator.share({files:[file], title:'Inventario Doña María Hotel'})
+      navigator.share({files:[file], title:'Inventario Dona Maria Hotel'})
         .then(function(){ toast('PDF compartido'); })
         .catch(function(e){ if(e.name!=='AbortError'){ doc.save(fn); toast('PDF guardado'); } });
       return;
     }
   } catch(e2){}
-  // Fallback: download the PDF
   doc.save(fn);
-  toast('PDF descargado — ábrelo y compártelo por WhatsApp');
+  toast('PDF descargado - comparte desde tu gestor de archivos');
 }
 
 
@@ -1395,7 +1378,7 @@ function sharePedidoWA(){
       var ped=parseFloat(values[key(si,pi,'pedido')]);
       if (isNaN(ped)||ped<=0) return;
       var qStr=String(ped);
-      // no cajasUnid suffix
+      if (p.cajasUnid>0) qStr=String(ped)+' ud / '+Math.ceil(ped/p.cajasUnid)+' cajas';
       secLines.push('  '+p.name+': '+qStr);
     });
     if (secLines.length){ lines.push('*'+sec.name+'*'); lines=lines.concat(secLines); lines.push(''); }
