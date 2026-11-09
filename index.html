@@ -508,6 +508,10 @@ header:after{content:"";position:absolute;inset:0;background:repeating-linear-gr
 .dot.ok{background:var(--green)}.dot.warn{background:var(--orange)}.dot.crit{background:var(--red)}
 
 /* aviso pedido rápido */
+/* aviso fijo de los dos ciclos */
+.diastrip{background:linear-gradient(135deg,#eef4fd,#e8f0fb);border:1px solid #d6e3f7;border-radius:12px;padding:9px 13px;font-size:11.5px;color:#345b93;font-weight:600;line-height:1.45;margin-bottom:12px}
+.diastrip b{color:var(--navy2)}
+
 .qbanner{background:linear-gradient(135deg,#fff8e1,#fff3cd);border:1px solid #ffe08a;border-radius:14px;padding:12px 15px;margin-bottom:14px;box-shadow:0 6px 16px -12px rgba(141,110,0,.5)}
 .qbanner h3{font-size:13px;color:#8d6e00;margin-bottom:2px}
 .qbanner p{font-size:11.5px;color:#a1810a;line-height:1.45}
@@ -523,7 +527,7 @@ header:after{content:"";position:absolute;inset:0;background:repeating-linear-gr
 .ico-btn.warn{color:var(--red)}
 
 /* ---------- ficha: cuadrícula con cabecera ---------- */
-.grid-hdr,.row{display:grid;grid-template-columns:minmax(0,1fr) 54px 62px 98px 54px 58px 30px;column-gap:6px;align-items:center}
+.grid-hdr,.row{display:grid;grid-template-columns:minmax(0,1fr) 56px 64px 56px 60px 30px;column-gap:8px;align-items:center}
 .grid-hdr{padding:8px 15px;background:#f9fbfe;border-bottom:1px solid var(--line);font-size:7.6px;font-weight:800;letter-spacing:.65px;text-transform:uppercase;color:var(--faint);white-space:nowrap}
 .grid-hdr .hc{text-align:center}
 .grid-hdr .hp{padding-left:2px}
@@ -549,11 +553,6 @@ header:after{content:"";position:absolute;inset:0;background:repeating-linear-gr
 .min-inp:hover{border-color:#cfdaeb;background:#fff}
 .min-inp:focus{border-color:var(--navy);background:#fff;box-shadow:0 0 0 3px rgba(26,39,68,.08)}
 .min-inp.vacio{border-style:dashed;border-color:#c9d6ea;color:var(--faint);font-weight:600}
-
-.c-dia{text-align:center}
-.c-dia .lbl{display:none}
-.dpill{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#345b93;background:#eef4fd;border:1px solid #dce8fa;border-radius:20px;padding:3px 8px;line-height:1.3;max-width:112px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.c-dia.na .dpill{background:#f4f6fa;color:var(--faint);border-color:#e8edf5}
 
 /* «pedir cuando»: columna propia */
 .c-pedir{display:flex;justify-content:center}
@@ -732,12 +731,11 @@ header:after{content:"";position:absolute;inset:0;background:repeating-linear-gr
   .ico-btn{width:27px;height:27px;border-radius:9px;font-size:12px}
   .c-tools .ico-btn{width:26px;height:26px}
 
-  .grid-hdr,.row{grid-template-columns:46px 54px minmax(0,1fr) 54px 30px;grid-template-areas:"prod prod prod prod prod" "min pedir dia dia tools" "hay hay ap ap tools";column-gap:6px;row-gap:7px}
+  .grid-hdr,.row{grid-template-columns:46px 52px 74px minmax(0,1fr) 30px;grid-template-areas:"prod prod prod prod prod" "min pedir hay ap tools";column-gap:6px;row-gap:7px}
   .grid-hdr{display:flex;align-items:baseline;gap:8px;padding:7px 11px;font-size:7.2px}
   .grid-hdr .hp{display:none}
   .grid-hdr .hc-min{order:1;width:46px;flex:0 0 46px;text-align:left}
   .grid-hdr .hc-pedir{order:2;width:88px;flex:0 0 88px;text-align:left}
-  .grid-hdr .hc-dia{order:3;flex:1;text-align:left;padding-left:4px}
   .grid-hdr .hc-qty{order:4;width:52px;flex:0 0 52px;text-align:left}
   .grid-hdr .hc-ap{order:5;width:56px;flex:0 0 56px;text-align:left}
   .grid-hdr .hc-tools{display:none}
@@ -749,8 +747,6 @@ header:after{content:"";position:absolute;inset:0;background:repeating-linear-gr
   .c-pedir{grid-area:pedir;justify-content:flex-start;display:flex;align-items:center;gap:3px}
   .c-pedir .lbl{display:inline;font-size:7px;font-weight:800;color:var(--faint);text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}
   .pedir-inp{max-width:40px;margin:0;padding:8px 2px;font-size:12.5px;text-align:center}
-  .c-dia{grid-area:dia;text-align:left;padding-left:0;display:flex;align-items:center;min-width:0;overflow:hidden}
-  .dpill{max-width:100%;font-size:7.2px;padding:3px 5px;border-radius:8px;letter-spacing:.1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .c-qty{grid-area:hay;justify-content:flex-start;display:flex;align-items:center;gap:4px}
   .c-qty .lbl{display:inline;font-size:7px;font-weight:800;color:var(--faint);text-transform:uppercase;letter-spacing:.3px;flex-shrink:0}
   .qty{max-width:64px;padding:9px 3px;border-radius:11px}
@@ -825,6 +821,8 @@ header:after{content:"";position:absolute;inset:0;background:repeating-linear-gr
     <span><i class="dot crit"></i><span class="lg-full">En «pedir cuando» o por debajo: hay que pedir</span><span class="lg-short">Pedir</span></span>
   </div>
 
+  <div class="diastrip">📅 Pedidos: <b>domingo → lunes</b> y <b>miércoles → jueves</b>. Todos los productos van en los dos pedidos.</div>
+
   <div id="quickBanner" style="display:none">
     <div class="qbanner">
       <h3>Pedido rápido</h3>
@@ -878,19 +876,10 @@ header:after{content:"";position:absolute;inset:0;background:repeating-linear-gr
       <div class="field">
         <label>Día de pedido</label>
         <select id="edDays">
+          <option value="AMBOS">Domingo y miércoles (llega lunes y jueves)</option>
+          <option value="DOMINGO">Solo domingo (llega el lunes)</option>
+          <option value="MIERCOLES">Solo miércoles (llega el jueves)</option>
           <option value="">Sin día fijo</option>
-          <option>CUALQUIER DIA</option>
-          <option>LUNES</option>
-          <option>MARTES</option>
-          <option>MIERCOLES</option>
-          <option>JUEVES</option>
-          <option>VIERNES</option>
-          <option>SABADO</option>
-          <option>DOMINGO</option>
-          <option>LUNES Y MIERCOLES</option>
-          <option>MARTES Y JUEVES</option>
-          <option>VIERNES Y MIERCOLES</option>
-          <option>DESAYUNOS</option>
         </select>
       </div>
       <div class="field">
@@ -1017,191 +1006,164 @@ var DEFAULT_DATA = [
     "name": "ELABORADOS",
     "products": [
      {
-      "id": "a37",
-      "n": "Foie gras pato",
-      "min": 5,
-      "pedir": 2,
-      "dias": "VIERNES Y MIERCOLES",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a38",
+      "id": "a01",
       "n": "Crema boletus",
       "min": 6,
       "pedir": 3,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a39",
+      "id": "a02",
       "n": "Crema calabaza",
       "min": 6,
       "pedir": 3,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a40",
+      "id": "a03",
       "n": "Crema calabacín",
       "min": 6,
       "pedir": 3,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a41",
+      "id": "a04",
+      "n": "Foie gras pato",
+      "min": 5,
+      "pedir": 2,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a05",
       "n": "Hummus",
       "min": 5,
       "pedir": 2,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a42",
+      "id": "a06",
       "n": "Montadito Piripi",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a43",
+      "id": "a07",
       "n": "Montadito Serranito",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a44",
+      "id": "a08",
       "n": "Montadito Aldeano",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a45",
-      "n": "Base Pizzas",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "id": "a09",
+      "n": "Carrillada Hecha Eusebio",
+      "min": 10,
+      "pedir": 5,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a46",
-      "n": "Carrillada",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "id": "a10",
+      "n": "Croquetas cola de toro",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a47",
-      "n": "Tortellinis",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a48",
-      "n": "Croquetas",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a49",
+      "id": "a11",
       "n": "Paella Señorito",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a50",
+      "id": "a12",
       "n": "Paella Verduras",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a51",
+      "id": "a13",
       "n": "Paella Mixta",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a52",
+      "id": "a14",
+      "n": "Tortellinis",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a15",
       "n": "Salmón a la menta",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 12,
+      "pedir": 6,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a53",
-      "n": "Torrijas",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a54",
-      "n": "Brownie",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a55",
-      "n": "Coulant",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a56",
+      "id": "a16",
       "n": "Quinoa",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
+      "min": 10,
+      "pedir": 5,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a57",
+      "id": "a17",
       "n": "Edamame",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a18",
+      "n": "Melva",
+      "min": 10,
+      "pedir": 5,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1212,65 +1174,83 @@ var DEFAULT_DATA = [
     "name": "PANADERÍA",
     "products": [
      {
-      "id": "a30",
+      "id": "a19",
       "n": "Picatostes",
       "min": 2,
       "pedir": 1,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a31",
+      "id": "a20",
       "n": "Pan hamburguesa patata",
-      "min": "1 caja",
-      "pedir": 0.5,
-      "dias": "MIERCOLES",
+      "min": 30,
+      "pedir": 10,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a32",
+      "id": "a21",
       "n": "Pan Min brioche",
-      "min": "1 caja",
-      "pedir": 0.5,
-      "dias": "CUALQUIER DIA",
+      "min": 30,
+      "pedir": 15,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a33",
+      "id": "a22",
       "n": "Pan molde 20 rebanadas",
       "min": 5,
       "pedir": 2,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a34",
+      "id": "a23",
       "n": "Picos 0,5kg camperos",
       "min": 2,
       "pedir": 1,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a35",
+      "id": "a24",
       "n": "Tostas de foie redondas",
       "min": 2,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a36",
-      "n": "Almendra cruda",
-      "min": 2,
+      "id": "a25",
+      "n": "Pan de hamburguesa pequeña",
+      "min": 30,
+      "pedir": 10,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a26",
+      "n": "Picos sin Gluten",
+      "min": 5,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a27",
+      "n": "Base Pizzas",
+      "min": 16,
+      "pedir": 8,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1281,251 +1261,233 @@ var DEFAULT_DATA = [
     "name": "SALSAS Y ADEREZOS",
     "products": [
      {
-      "id": "a01",
+      "id": "a28",
       "n": "Gaucha",
       "min": 4,
       "pedir": 2,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a02",
+      "id": "a29",
       "n": "Cesar",
       "min": 2,
       "pedir": 1,
-      "dias": "MARTES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a03",
+      "id": "a30",
       "n": "Mayonesa",
       "min": 4,
       "pedir": 2,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a04",
+      "id": "a31",
       "n": "Aceite de girasol 25L",
       "min": 1,
       "pedir": 0.5,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a05",
+      "id": "a32",
       "n": "Aceite de oliva 5L",
       "min": 1,
       "pedir": 0.5,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a06",
+      "id": "a33",
       "n": "Sal maldon",
       "min": 1,
       "pedir": 0.5,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a07",
+      "id": "a34",
       "n": "Gildas",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a08",
+      "id": "a35",
       "n": "Vinagre de Jerez",
       "min": 1,
       "pedir": 0.5,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a36",
+      "n": "Oregano",
+      "min": 1,
+      "pedir": 0.5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a37",
+      "n": "Ajo en Polvo",
+      "min": 1,
+      "pedir": 0.5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a38",
+      "n": "Ave Cream",
+      "min": 1,
+      "pedir": 0.5,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
     ]
    },
    {
-    "id": "charcuteria",
-    "name": "CHARCUTERÍA",
+    "id": "charcuteria-y-quesos-var",
+    "name": "CHARCUTERÍA Y QUESOS VARIOS",
     "products": [
      {
-      "id": "a09",
+      "id": "a39",
       "n": "Jamón 100% bellota 50gr",
       "min": 10,
       "pedir": 5,
-      "dias": "LUNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a10",
+      "id": "a40",
       "n": "Jamón 100% bellota 100gr",
       "min": 10,
       "pedir": 5,
-      "dias": "LUNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a11",
+      "id": "a41",
       "n": "Queso variado 120gr",
       "min": 10,
       "pedir": 5,
-      "dias": "LUNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a12",
+      "id": "a42",
       "n": "Queso variado 240gr",
       "min": 10,
       "pedir": 5,
-      "dias": "LUNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a13",
+      "id": "a43",
       "n": "Queso curado ½ pieza",
       "min": 1,
-      "pedir": 0,
-      "dias": "LUNES Y MIERCOLES",
+      "pedir": 0.5,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a14",
+      "id": "a44",
       "n": "Queso crema",
       "min": 2,
       "pedir": 1,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a15",
+      "id": "a45",
       "n": "Queso parmesano",
       "min": 3,
       "pedir": 1,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a16",
+      "id": "a46",
       "n": "Queso barra",
       "min": 0.5,
-      "pedir": 0.25,
-      "dias": "",
+      "pedir": 0.1,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a17",
+      "id": "a47",
       "n": "Queso cabra",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a18",
+      "id": "a48",
       "n": "Queso mozarella",
       "min": 6,
       "pedir": 3,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a19",
+      "id": "a49",
       "n": "Queso 4 Quesos",
       "min": 6,
       "pedir": 3,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a20",
+      "id": "a50",
       "n": "Burrata",
-      "min": 12,
-      "pedir": 6,
-      "dias": "LUNES",
+      "min": 5,
+      "pedir": 2,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a21",
-      "n": "Mascarpone",
-      "min": 0,
-      "pedir": null,
-      "dias": "LUNES",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a22",
-      "n": "Chicharron para freir",
-      "min": 2,
-      "pedir": 1,
-      "dias": "VIERNES Y MIERCOLES",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a23",
-      "n": "Pollo filetes",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a24",
-      "n": "Pollo empanado",
-      "min": 0,
-      "pedir": null,
-      "dias": "",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a25",
-      "n": "Hamburguesas",
-      "min": 0,
-      "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a26",
+      "id": "a51",
       "n": "Taco Bacon",
       "min": 0.5,
       "pedir": 0.25,
-      "dias": "DESAYUNOS",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a27",
+      "id": "a52",
       "n": "Jamón cocido",
       "min": 0.5,
       "pedir": 0.25,
-      "dias": "DESAYUNOS",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1536,44 +1498,179 @@ var DEFAULT_DATA = [
     "name": "POSTRE",
     "products": [
      {
-      "id": "a63",
+      "id": "a53",
       "n": "Sirope chocolate carte d´or",
       "min": 1,
       "pedir": 0.5,
-      "dias": "MARTES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a64",
+      "id": "a54",
       "n": "Chocolate fundir",
       "min": 2,
       "pedir": 1,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a65",
+      "id": "a55",
       "n": "Barquillos decoración chocolate",
       "min": 1,
       "pedir": 0.5,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a56",
+      "n": "Helado de Vainilla",
+      "min": 1,
+      "pedir": 0.5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a57",
+      "n": "Helado de Pistacho",
+      "min": 1,
+      "pedir": 0.5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a58",
+      "n": "Torrijas",
+      "min": 2,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a59",
+      "n": "Coulant",
+      "min": 15,
+      "pedir": 8,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a60",
+      "n": "Brownie",
+      "min": 20,
+      "pedir": 10,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
     ]
    },
    {
-    "id": "pescados",
-    "name": "PESCADOS",
+    "id": "pescados-y-carnes",
+    "name": "PESCADOS Y CARNES",
     "products": [
      {
-      "id": "a28",
+      "id": "a61",
       "n": "Salmón recortes",
       "min": 2,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a62",
+      "n": "Carrillada Paquetes congelados",
+      "min": 10,
+      "pedir": 5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a63",
+      "n": "Pavias",
+      "min": 5,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a64",
+      "n": "Adobo",
+      "min": 2,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a65",
+      "n": "Chocos",
+      "min": 2,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a66",
+      "n": "Trompetas de Langostinos",
+      "min": 3,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a67",
+      "n": "Pollo filetes",
+      "min": 15,
+      "pedir": 5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a68",
+      "n": "Pollo empanado",
+      "min": 10,
+      "pedir": 5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a69",
+      "n": "Hamburguesas",
+      "min": 20,
+      "pedir": 10,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a70",
+      "n": "Hamburguesas Pequeñas",
+      "min": 40,
+      "pedir": 20,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a71",
+      "n": "Chicharron para freir",
+      "min": 2,
+      "pedir": 1,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1584,74 +1681,146 @@ var DEFAULT_DATA = [
     "name": "VARIOS",
     "products": [
      {
-      "id": "a29",
-      "n": "Melva",
-      "min": 10,
-      "pedir": 5,
-      "dias": "VIERNES Y MIERCOLES",
-      "nota": "",
-      "cajas": 0
-     },
-     {
-      "id": "a58",
+      "id": "a72",
       "n": "Palomitas",
       "min": 1,
       "pedir": 0.5,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a59",
+      "id": "a73",
       "n": "Levadura",
       "min": 1,
       "pedir": 0.5,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a60",
+      "id": "a74",
       "n": "Harina reposteria",
       "min": 8,
       "pedir": 4,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a61",
+      "id": "a75",
       "n": "Azúcar kg",
       "min": 4,
       "pedir": 1,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a62",
+      "id": "a76",
       "n": "Tomate natural triturado",
-      "min": "1 caja",
-      "pedir": 0.5,
-      "dias": "",
+      "min": 10,
+      "pedir": 5,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a66",
+      "id": "a77",
       "n": "Papel para horno",
       "min": 2,
       "pedir": 1,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
      {
-      "id": "a67",
+      "id": "a78",
       "n": "Film transparente",
       "min": 2,
       "pedir": 1,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a79",
+      "n": "Papas Gajo",
+      "min": 4,
+      "pedir": 2,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a80",
+      "n": "Fingers de Pollo",
+      "min": 3,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a81",
+      "n": "Adobo Sevillano",
+      "min": 2,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a82",
+      "n": "Cola de toro",
+      "min": 5,
+      "pedir": 2.5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a83",
+      "n": "Tortillas Grandes",
+      "min": 8,
+      "pedir": 4,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a84",
+      "n": "Tortillas pequeñas",
+      "min": 3,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a85",
+      "n": "Tortillas paquete de 9 un",
+      "min": 5,
+      "pedir": 1,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a86",
+      "n": "Croquetas Puchero",
+      "min": 1,
+      "pedir": 0.5,
+      "dias": "AMBOS",
+      "nota": "",
+      "cajas": 0
+     },
+     {
+      "id": "a87",
+      "n": "Almendra cruda",
+      "min": 1,
+      "pedir": 0.5,
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1672,7 +1841,7 @@ var DEFAULT_DATA = [
       "n": "Jamón deshuesado sin corteza",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1681,7 +1850,7 @@ var DEFAULT_DATA = [
       "n": "Pieza jamón cocido",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1690,7 +1859,7 @@ var DEFAULT_DATA = [
       "n": "Pieza pavo",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1699,7 +1868,7 @@ var DEFAULT_DATA = [
       "n": "Pieza centro paleta ibérica cebo",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1708,7 +1877,7 @@ var DEFAULT_DATA = [
       "n": "Pieza bacon",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1723,7 +1892,7 @@ var DEFAULT_DATA = [
       "n": "Leche En Polvo",
       "min": 4,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1732,7 +1901,7 @@ var DEFAULT_DATA = [
       "n": "Mantequilla porción",
       "min": 0.5,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1741,7 +1910,7 @@ var DEFAULT_DATA = [
       "n": "Leche Hostelería 1,5L",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1750,7 +1919,7 @@ var DEFAULT_DATA = [
       "n": "Leche sin lactosa",
       "min": 3,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1759,7 +1928,7 @@ var DEFAULT_DATA = [
       "n": "Leche de soja",
       "min": 3,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1768,7 +1937,7 @@ var DEFAULT_DATA = [
       "n": "Queso barra",
       "min": 4,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1777,7 +1946,7 @@ var DEFAULT_DATA = [
       "n": "Queso fresco",
       "min": 8,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1786,7 +1955,7 @@ var DEFAULT_DATA = [
       "n": "Cubo yogurt",
       "min": 4,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1795,7 +1964,7 @@ var DEFAULT_DATA = [
       "n": "Queso brie",
       "min": 1,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1810,7 +1979,7 @@ var DEFAULT_DATA = [
       "n": "carton de huevos xl",
       "min": 10,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1819,7 +1988,7 @@ var DEFAULT_DATA = [
       "n": "Huevo liquido",
       "min": 10,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1828,7 +1997,7 @@ var DEFAULT_DATA = [
       "n": "Aceite (tapón rojo)",
       "min": 4,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1837,7 +2006,7 @@ var DEFAULT_DATA = [
       "n": "Aceite (tapón verde)",
       "min": 4,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1852,7 +2021,7 @@ var DEFAULT_DATA = [
       "n": "Panecillo integral 75g",
       "min": 30,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1861,7 +2030,7 @@ var DEFAULT_DATA = [
       "n": "Bocatín rústico hostelero semillas 75g",
       "min": 30,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1870,7 +2039,7 @@ var DEFAULT_DATA = [
       "n": "Suprema gourmet 65g",
       "min": 50,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1879,7 +2048,7 @@ var DEFAULT_DATA = [
       "n": "Baguetina sin gluten 105gr",
       "min": 5,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1888,7 +2057,7 @@ var DEFAULT_DATA = [
       "n": "Pan molde 30 rebanadas",
       "min": 2,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1903,7 +2072,7 @@ var DEFAULT_DATA = [
       "n": "Croissant mini recto mantequilla",
       "min": 50,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1912,7 +2081,7 @@ var DEFAULT_DATA = [
       "n": "Mini Sneeken pasas nueces",
       "min": 20,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1921,7 +2090,7 @@ var DEFAULT_DATA = [
       "n": "Mini rejita crema de cacao",
       "min": 20,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1930,7 +2099,7 @@ var DEFAULT_DATA = [
       "n": "Mini pepito de choco (SUSO)",
       "min": 20,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1939,7 +2108,7 @@ var DEFAULT_DATA = [
       "n": "Mini hoops glaseados",
       "min": 10,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1948,7 +2117,7 @@ var DEFAULT_DATA = [
       "n": "Corn Flakes Pascual",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1957,7 +2126,7 @@ var DEFAULT_DATA = [
       "n": "Cereales chocolate",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1972,7 +2141,7 @@ var DEFAULT_DATA = [
       "n": "Nocilla porciones",
       "min": 0.5,
       "pedir": null,
-      "dias": "MARTES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -1981,7 +2150,7 @@ var DEFAULT_DATA = [
       "n": "Muesli Pascual",
       "min": 1,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -1996,7 +2165,7 @@ var DEFAULT_DATA = [
       "n": "Mermelada porción fresa",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2005,7 +2174,7 @@ var DEFAULT_DATA = [
       "n": "Mermelada porción melocotón",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2014,7 +2183,7 @@ var DEFAULT_DATA = [
       "n": "Mermelada porción naranja",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2023,7 +2192,7 @@ var DEFAULT_DATA = [
       "n": "Miel cristal 30 gr",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2038,7 +2207,7 @@ var DEFAULT_DATA = [
       "n": "Descafeinado 100 Sobres",
       "min": 0.5,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2047,7 +2216,7 @@ var DEFAULT_DATA = [
       "n": "Café Grano Expreso",
       "min": 1,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2056,7 +2225,7 @@ var DEFAULT_DATA = [
       "n": "Cacao Polvo",
       "min": 2,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2065,7 +2234,7 @@ var DEFAULT_DATA = [
       "n": "Té negro",
       "min": 1,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2074,7 +2243,7 @@ var DEFAULT_DATA = [
       "n": "Té verde",
       "min": 1,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2083,7 +2252,7 @@ var DEFAULT_DATA = [
       "n": "Menta poleo",
       "min": 1,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2092,7 +2261,7 @@ var DEFAULT_DATA = [
       "n": "Manzanilla",
       "min": 1,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2101,7 +2270,7 @@ var DEFAULT_DATA = [
       "n": "Té rojo",
       "min": 1,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2110,7 +2279,7 @@ var DEFAULT_DATA = [
       "n": "Cola cao sobres (3+1)",
       "min": 0.5,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2119,7 +2288,7 @@ var DEFAULT_DATA = [
       "n": "Tila 25 sobres",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2128,7 +2297,7 @@ var DEFAULT_DATA = [
       "n": "Manzanilla 25 sobres",
       "min": 1,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2143,7 +2312,7 @@ var DEFAULT_DATA = [
       "n": "Azúcar sobre 10kg",
       "min": 0.5,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2152,7 +2321,7 @@ var DEFAULT_DATA = [
       "n": "Endulzante",
       "min": 0.5,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2161,7 +2330,7 @@ var DEFAULT_DATA = [
       "n": "Sobres Azúcar Moreno",
       "min": 0.5,
       "pedir": null,
-      "dias": "LUNES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2176,7 +2345,7 @@ var DEFAULT_DATA = [
       "n": "Zumo brick Piña",
       "min": 4,
       "pedir": null,
-      "dias": "MARTES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2185,7 +2354,7 @@ var DEFAULT_DATA = [
       "n": "Zumo brick Melocoton",
       "min": 4,
       "pedir": null,
-      "dias": "MARTES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2200,7 +2369,7 @@ var DEFAULT_DATA = [
       "n": "Galletas Maria",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2209,7 +2378,7 @@ var DEFAULT_DATA = [
       "n": "Paladín sobres",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2218,7 +2387,7 @@ var DEFAULT_DATA = [
       "n": "Fideos chocolate",
       "min": 2,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2227,7 +2396,7 @@ var DEFAULT_DATA = [
       "n": "Chocolate fundir",
       "min": 1,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2242,7 +2411,7 @@ var DEFAULT_DATA = [
       "n": "Cereales sin gluten",
       "min": 1,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2251,7 +2420,7 @@ var DEFAULT_DATA = [
       "n": "Choco chips cookies sin gluten",
       "min": 1,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2260,7 +2429,7 @@ var DEFAULT_DATA = [
       "n": "Chocolates sin gluten",
       "min": 1,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2269,7 +2438,7 @@ var DEFAULT_DATA = [
       "n": "Muffin sin gluten",
       "min": 1,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2278,7 +2447,7 @@ var DEFAULT_DATA = [
       "n": "Galleta Maria sin gluten",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2287,7 +2456,7 @@ var DEFAULT_DATA = [
       "n": "Cereales sin gluten (2)",
       "min": 0.5,
       "pedir": null,
-      "dias": "VIERNES Y MIERCOLES",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2302,7 +2471,7 @@ var DEFAULT_DATA = [
       "n": "Film transparente",
       "min": 1,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2311,7 +2480,7 @@ var DEFAULT_DATA = [
       "n": "Cubo Gelatina",
       "min": 0.5,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2320,7 +2489,7 @@ var DEFAULT_DATA = [
       "n": "Papel para horno",
       "min": 0.5,
       "pedir": null,
-      "dias": "CUALQUIER DIA",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2341,7 +2510,7 @@ var DEFAULT_DATA = [
       "n": "Almendras Crudas",
       "min": 2,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2350,7 +2519,7 @@ var DEFAULT_DATA = [
       "n": "Gildas",
       "min": 2,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2359,7 +2528,7 @@ var DEFAULT_DATA = [
       "n": "Gambas",
       "min": 2,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2368,7 +2537,7 @@ var DEFAULT_DATA = [
       "n": "Risotto",
       "min": 6,
       "pedir": 3,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2377,7 +2546,7 @@ var DEFAULT_DATA = [
       "n": "Aceite Trufa",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2386,7 +2555,7 @@ var DEFAULT_DATA = [
       "n": "Trompetas",
       "min": 0,
       "pedir": null,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2395,7 +2564,7 @@ var DEFAULT_DATA = [
       "n": "Noodle",
       "min": 4,
       "pedir": 2,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2404,7 +2573,7 @@ var DEFAULT_DATA = [
       "n": "Patatas Pajas",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2413,7 +2582,7 @@ var DEFAULT_DATA = [
       "n": "Pan Brioche",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2422,7 +2591,7 @@ var DEFAULT_DATA = [
       "n": "Adobito Sevillano",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2431,7 +2600,7 @@ var DEFAULT_DATA = [
       "n": "Gyozas",
       "min": 2,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2440,7 +2609,7 @@ var DEFAULT_DATA = [
       "n": "Tostas Finas Redondas",
       "min": 2,
       "pedir": 1,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      },
@@ -2449,7 +2618,7 @@ var DEFAULT_DATA = [
       "n": "Chicharrón De Cádiz",
       "min": 1,
       "pedir": 0.5,
-      "dias": "",
+      "dias": "AMBOS",
       "nota": "",
       "cajas": 0
      }
@@ -2520,12 +2689,35 @@ function toast(msg, ms) {
 function diaCorto(d) {
   if (!d) return '';
   var x = String(d).toUpperCase().replace(/\s+/g, ' ').trim();
+  if (x === 'AMBOS') return 'Domingo y miérc.';
+  if (x === 'DOMINGO') return 'Domingo';
+  if (x === 'MIERCOLES' || x === 'MIÉRCOLES') return 'Miércoles';
   if (x === 'CUALQUIER DIA' || x === 'CUALQUIER DÍA') return 'Cualquier día';
   if (x === 'VIERNES Y MIERCOLES' || x === 'VIERNES Y MIÉRCOLES') return 'Viernes y miérc.';
   if (x === 'LUNES Y MIERCOLES' || x === 'LUNES Y MIÉRCOLES') return 'Lunes y miérc.';
   if (x === 'MARTES Y JUEVES') return 'Martes y jueves';
   var cap = x.charAt(0) + x.slice(1).toLowerCase();
   return cap;
+}
+/* el pedido se prepara un día y llega al almacén al siguiente */
+var CICLOS = [
+  { inv: 'DOMINGO', llega: 'lunes' },
+  { inv: 'MIERCOLES', llega: 'jueves' }
+];
+function cicloDe(d) {
+  var k = String(d || '').toUpperCase();
+  if (k === 'AMBOS') return 'AMBOS';
+  return (k.indexOf('MIERCOLES') >= 0 || k.indexOf('MIÉRCOLES') >= 0) ? 'MIERCOLES' : 'DOMINGO';
+}
+function llegaDe(d) {
+  var c = cicloDe(d);
+  if (c === 'AMBOS') return 'lunes y jueves';
+  return c === 'MIERCOLES' ? 'jueves' : 'lunes';
+}
+/* etiqueta completa: «Domingo → llega lunes» */
+function diaLargo(d) {
+  if (!d) return 'Sin día fijo';
+  return diaCorto(d) + ' → llega ' + llegaDe(d);
 }
 
 /* ---------- catálogo ---------- */
@@ -2592,6 +2784,12 @@ var RENOMBRES = {
   "Ático": "Ático 17 · Cocina",
   "Patio": "Patio Desayunos"
 };
+/* Pasa los días antiguos (texto libre del Excel) a los dos ciclos actuales */
+function migrarDia(d) {
+  var x = String(d || '').toUpperCase();
+  if (x.indexOf('MIERCOLES') >= 0 || x.indexOf('MIÉRCOLES') >= 0) return 'MIERCOLES';
+  return 'DOMINGO';
+}
 function migrarCatalog(cat) {
   var cambio = false;
   (cat || []).forEach(function (l) {
@@ -2646,7 +2844,7 @@ function normalizeCatalog(raw) {
           n: String(p.n).slice(0, 80),
           min: isFinite(num(p.min)) ? tope(num(p.min)) : 0,
           pedir: isFinite(num(p.pedir)) && num(p.pedir) > 0 ? tope(num(p.pedir)) : null,
-          dias: String(p.dias || '').slice(0, 40),
+          dias: migrarDia(p.dias),
           nota: String(p.nota || '').slice(0, 200),
           cajas: isFinite(num(p.cajas)) ? Math.max(0, Math.round(num(p.cajas))) : 0
         });
@@ -2742,7 +2940,6 @@ function rowHtml(sec, p) {
     + ' data-sec="' + esc(sec.id) + '" data-pid="' + esc(p.id) + '"'
     + ' onchange="onPedir(this)" onblur="onPedir(this)" onfocus="this.select()">'
     + '</div>'
-    + '<div class="c-dia' + (dia ? '' : ' na') + '"><span class="dpill">' + (dia || '—') + '</span></div>'
     + '<div class="c-qty"><span class="lbl">Hay</span>'
     + '<input class="qty' + (qty !== '' ? ' filled' : '') + '" type="number" inputmode="decimal" step="0.5" min="0"'
     + ' value="' + qty + '" placeholder="—" aria-label="Existencias de ' + esc(p.n) + '"'
@@ -2764,7 +2961,6 @@ function headerHtml() {
     + '<div class="hp">Producto</div>'
     + '<div class="hc hc-min">Mínimo</div>'
     + '<div class="hc hc-pedir">Pedir cuando</div>'
-    + '<div class="hc hc-dia">Día de pedido</div>'
     + '<div class="hc hc-qty">Hay</div>'
     + '<div class="hc hc-ap">A pedir</div>'
     + '<div class="hc hc-tools"></div>'
@@ -3276,7 +3472,7 @@ function renderPedidoModal() {
     var k = it.secId + '|' + it.p.id;
     var q = state.pedido[k];
     h += '<div class="ped-item' + (it.st === 'danger' ? ' crit' : '') + '">'
-      + '<div class="ped-name">' + esc(it.p.n) + (it.p.dias ? '<br><span style="font-size:9px;color:#5a6a8a;font-weight:700">' + esc(diaCorto(it.p.dias)) + '</span>' : '') + '</div>'
+      + '<div class="ped-name">' + esc(it.p.n) + (it.p.dias ? '<br><span style="font-size:9px;color:#5a6a8a;font-weight:700">' + esc(diaLargo(it.p.dias)) + '</span>' : '') + '</div>'
       + '<div class="ped-right">'
       + '<div class="ped-info">hay <b>' + fmt(it.stock) + '</b><br>mín ' + fmt(it.p.min) + ' · pedir ≤ ' + fmt(pedirCuando(it.p)) + '</div>'
       + '<input class="ped-qty" type="number" inputmode="decimal" step="0.5" min="0" value="' + fmt(q) + '"'
@@ -3343,49 +3539,33 @@ function shareWA() {
 }
 
 /* ---------- días de pedido ---------- */
-var ORDEN_DIAS = ['CUALQUIER DIA', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO',
-  'DOMINGO', 'LUNES Y MIERCOLES', 'MARTES Y JUEVES', 'VIERNES Y MIERCOLES', 'DESAYUNOS', ''];
+var ORDEN_DIAS = ['DOMINGO', 'MIERCOLES'];
 
 function claveDia(d) {
   if (!d) return '';
   var x = String(d).toUpperCase().replace(/\s+/g, ' ').trim();
-  x = x.replace('MIÉRCOLES', 'MIERCOLES').replace('SÁBADO', 'SABADO');
+  x = x.replace('MIÉRCOLES', 'MIERCOLES');
+  if (x.indexOf('MIERCOLES') >= 0) return 'MIERCOLES';
+  if (x.indexOf('DOMINGO') >= 0) return 'DOMINGO';
   return x;
 }
 function nombreDia(clave) {
   if (!clave) return 'Sin día fijo';
-  var nombres = {
-    'CUALQUIER DIA': 'Cualquier día',
-    'LUNES': 'Lunes',
-    'MARTES': 'Martes',
-    'MIERCOLES': 'Miércoles',
-    'JUEVES': 'Jueves',
-    'VIERNES': 'Viernes',
-    'SABADO': 'Sábado',
-    'DOMINGO': 'Domingo',
-    'LUNES Y MIERCOLES': 'Lunes y miércoles',
-    'MARTES Y JUEVES': 'Martes y jueves',
-    'VIERNES Y MIERCOLES': 'Viernes y miércoles',
-    'DESAYUNOS': 'Desayunos'
-  };
-  return nombres[clave] || diaCorto(clave);
+  if (clave === 'DOMINGO') return 'Domingo';
+  if (clave === 'MIERCOLES') return 'Miércoles';
+  if (clave === 'AMBOS') return 'Domingo y miércoles';
+  return diaCorto(clave);
 }
 function diasDisponibles() {
-  var usados = {};
-  sectionsOf().forEach(function (s) {
-    s.products.forEach(function (p) { usados[claveDia(p.dias)] = true; });
-  });
-  var lista = ORDEN_DIAS.filter(function (d) { return usados[d]; });
-  Object.keys(usados).sort().forEach(function (d) {
-    if (lista.indexOf(d) < 0) lista.push(d);
-  });
-  return lista;
+  /* todos los productos van en «AMBOS»: los dos ciclos están siempre disponibles */
+  return ORDEN_DIAS.slice();
 }
 function itemsDeDia(clave, soloPendientes) {
   var out = [];
   sectionsOf().forEach(function (s) {
     s.products.forEach(function (p) {
-      if (claveDia(p.dias) !== clave) return;
+      var c = cicloDe(p.dias);
+      if (c !== 'AMBOS' && c !== clave) return;
       var st = statusOf(p, s.id);
       if (soloPendientes && !(st === 'warn' || st === 'danger')) return;
       out.push({ secName: s.name, secId: s.id, p: p, st: st, stock: stockOf(p, s.id), qty: ordenSugerida(p, s.id) });
@@ -3396,17 +3576,22 @@ function itemsDeDia(clave, soloPendientes) {
 function contarPendientesDia(clave) {
   return itemsDeDia(clave, true).length;
 }
-/* día de hoy en la misma clave que el Excel (LUNES, MARTES, ...) */
+/* ciclo que toca hoy: domingo/lunes → domingo; miércoles/jueves → miércoles.
+   Martes, viernes y sábado se enseña el próximo ciclo. */
 function claveHoy() {
-  var d = new Date();
-  return ['DOMINGO', 'LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO'][d.getDay()];
+  var d = new Date().getDay(); /* 0 domingo … 6 sábado */
+  if (d === 0 || d === 1) return 'DOMINGO';
+  if (d === 3 || d === 4) return 'MIERCOLES';
+  if (d === 2) return 'MIERCOLES'; /* martes: el siguiente es el miércoles */
+  return 'DOMINGO';
 }
 function pendientesHoy() {
   var hoy = claveHoy();
   var n = 0;
   sectionsOf().forEach(function (s) {
     s.products.forEach(function (p) {
-      if (claveDia(p.dias).indexOf(hoy) < 0) return;
+      var c = cicloDe(p.dias);
+      if (c !== 'AMBOS' && c !== hoy) return;
       var st = statusOf(p, s.id);
       if (st === 'warn' || st === 'danger') n++;
     });
@@ -3441,9 +3626,10 @@ function renderDias() {
   dias.forEach(function (d) {
     var n = contarPendientesDia(d);
     h += '<button class="dia-chip' + (d === sel ? ' act' : '') + (n === 0 ? ' zero' : '') + '" onclick="setDia(\'' + esc(d).replace(/'/g, "\\'") + '\')">'
-      + esc(nombreDia(d)) + (n ? '<span class="n">' + n + '</span>' : '') + '</button>';
+      + esc(diaLargo(d)) + (n ? '<span class="n">' + n + '</span>' : '') + '</button>';
   });
   h += '</div>';
+  h += '<div class="hint-box" style="margin-top:0"><b>Todos los productos van en los dos pedidos.</b><br>Se revisa el <b>domingo</b> y el pedido entra el <b>lunes</b>; se revisa el <b>miércoles</b> y entra el <b>jueves</b>.</div>';
 
   var items = itemsDeDia(sel, true);
   var todos = itemsDeDia(sel, false);
@@ -3453,14 +3639,14 @@ function renderDias() {
   if (!todos.length) {
     h += '<div class="hint-box">No hay productos con este día de pedido en ' + esc(locName()) + '.</div>';
   } else if (!items.length) {
-    h += '<div class="hint-box"><b>Nada que pedir este día.</b><br>Los ' + todos.length + ' productos de «' + esc(nombreDia(sel)) + '» están por encima del mínimo.</div>';
+    h += '<div class="hint-box"><b>Nada que pedir este día.</b><br>Los ' + todos.length + ' productos de «' + esc(diaLargo(sel)) + '» están por encima del mínimo.</div>';
     h += '<div class="ped-sec">Productos de este día</div>';
     todos.forEach(function (it) {
       h += '<div class="dia-item"><div class="nm">' + esc(it.p.n) + '<small>' + esc(it.secName) + '</small></div>'
         + '<div class="q">' + (it.stock === null ? '—' : fmt(it.stock)) + '</div></div>';
     });
   } else {
-    h += '<div class="dia-sum"><b>' + esc(nombreDia(sel)) + ':</b> ' + items.length + ' producto' + (items.length === 1 ? '' : 's')
+    h += '<div class="dia-sum"><b>' + esc(diaLargo(sel)) + ':</b> ' + items.length + ' producto' + (items.length === 1 ? '' : 's')
       + ' por debajo del mínimo · <b>' + fmt(totalPend) + ' unidades</b> a pedir.</div>';
     var lastSec = '';
     items.forEach(function (it) {
@@ -3625,7 +3811,7 @@ function generatePDF(soloPedido, filtro) {
       doc.text(num(r.p.pedir) > 0 ? fmt(r.p.pedir) : (num(r.p.min) > 0 ? fmt(num(r.p.min) / 2) : '—'), M + CX.pcu, y, { align: 'center' });
       doc.setFontSize(6.2);
       doc.setTextColor(blue[0], blue[1], blue[2]);
-      doc.text(recorta(diaCorto(r.p.dias) || '—', 26), M + CX.dia, y, { align: 'center' });
+      doc.text(recorta(cicloDe(r.p.dias) === 'AMBOS' ? diaCorto(r.p.dias) : (diaCorto(r.p.dias) ? diaCorto(r.p.dias) + ' → ' + llegaDe(r.p.dias) : '—'), 30), M + CX.dia, y, { align: 'center' });
       doc.setFontSize(7.7);
 
       doc.setFont('helvetica', 'bold');
@@ -3725,6 +3911,18 @@ window.onload = function () {
     document.head.appendChild(l2);
   }
   loadAll();
+  /* una sola vez en cada móvil: todos los productos pasan a los dos días */
+  try {
+    if (!localStorage.getItem('dm_inv_dias_ambos')) {
+      state.catalog.forEach(function (l) {
+        l.sections.forEach(function (s) {
+          s.products.forEach(function (p) { p.dias = 'AMBOS'; });
+        });
+      });
+      saveCatalog();
+      localStorage.setItem('dm_inv_dias_ambos', '1');
+    }
+  } catch (e) {}
   var lastLoc = null;
   try { lastLoc = localStorage.getItem('dm_inv_v2_ubicacion'); } catch (e) {}
   var has = state.catalog.some(function (l) { return l.id === lastLoc; });
