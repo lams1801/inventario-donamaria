@@ -3692,11 +3692,122 @@ function generatePDFDia() {
   setTimeout(function () { generatePDF(true, { dia: state.diaSel, titulo: 'PEDIDO · ' + nombreDia(state.diaSel).toUpperCase() }); }, 150);
 }
 /* ---------- PDF ---------- */
+/* Hoja de pedido: solo familia, nombre y cantidad */
+function generatePDFPedido(filtro) {
+  var doc = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  var W = doc.internal.pageSize.getWidth();
+  var H = doc.internal.pageSize.getHeight();
+  var M = 16;
+  var y = 16;
+  var navy = [26, 39, 68], gold = [201, 168, 76], muted = [90, 106, 138], line = [225, 231, 240];
+
+  var hayLogo = typeof logoHotelB64 === 'string' && logoHotelB64.length > 20;
+  if (hayLogo) {
+    try { doc.addImage('data:image/png;base64,' + logoHotelB64, 'PNG', W - M - 33, 10, 33, 20); } catch (e) {}
+  }
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(17);
+  doc.setTextColor(navy[0], navy[1], navy[2]);
+  doc.text('PEDIDO', M, 20);
+
+  doc.setFontSize(10.5);
+  doc.setTextColor(gold[0], gold[1], gold[2]);
+  doc.text(locName().toUpperCase() + (filtro && filtro.dia !== undefined ? ' · ' + nombreDia(filtro.dia).toUpperCase() : ''), M, 27);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8.6);
+  doc.setTextColor(muted[0], muted[1], muted[2]);
+  var quien = ($('realizadoPor').value || '').trim();
+  doc.text('Fecha: ' + fechaLarga($('fecha').value || todayISO()) + (quien ? '   ·   Realizado por: ' + quien : ''), M, 33);
+
+  doc.setDrawColor(gold[0], gold[1], gold[2]);
+  doc.setLineWidth(0.7);
+  doc.line(M, 36, W - M, 36);
+  y = 45;
+
+  var lastSec = '';
+  var nLineas = 0;
+
+  function salto(needed) {
+    if (y + needed > H - 18) { doc.addPage(); y = 18; }
+  }
+  function recorta(txt, maxw) {
+    var s = String(txt);
+    if (doc.getTextWidth(s) <= maxw) return s;
+    while (s.length > 3 && doc.getTextWidth(s + '…') > maxw) s = s.slice(0, -1);
+    return s + '…';
+  }
+
+  sectionsOf().forEach(function (sec) {
+    var rows = [];
+    sec.products.forEach(function (p) {
+      if (filtro && filtro.dia !== undefined && cicloDe(p.dias) !== 'AMBOS' && cicloDe(p.dias) !== filtro.dia) return;
+      if (!needsOrder(p, sec.id)) return;
+      var q = ordenSugerida(p, sec.id);
+      if (!q) return;
+      rows.push({ p: p, q: q });
+    });
+    if (!rows.length) return;
+
+    /* la familia no se queda sola al pie de la página */
+    salto(10 + Math.min(rows.length, 3) * 8);
+
+    if (sec.name !== lastSec) {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.4);
+      doc.setTextColor(147, 161, 186);
+      doc.text(sec.name, M, y);
+      doc.setDrawColor(line[0], line[1], line[2]);
+      doc.setLineWidth(0.3);
+      doc.line(M, y + 2, W - M, y + 2);
+      y += 8;
+      lastSec = sec.name;
+    }
+
+    rows.forEach(function (r) {
+      salto(7);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10.5);
+      doc.setTextColor(navy[0], navy[1], navy[2]);
+      doc.text(recorta(r.p.n, W - 2 * M - 30), M, y);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11.5);
+      doc.text(fmt(r.q), W - M, y, { align: 'right' });
+      y += 7.6;
+      nLineas++;
+    });
+    y += 3;
+  });
+
+  if (!nLineas) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(muted[0], muted[1], muted[2]);
+    doc.text('No hay nada que pedir en esta ubicación.', M, y + 2);
+  }
+
+  var totalPag = doc.internal.getNumberOfPages();
+  for (var pg = 1; pg <= totalPag; pg++) {
+    doc.setPage(pg);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(170, 180, 196);
+    doc.text('Doña María Hotel · Pedido · ' + locName(), M, H - 8);
+    doc.text('Página ' + pg + ' de ' + totalPag, W - M, H - 8, { align: 'right' });
+  }
+
+  var sufijo = (filtro && filtro.dia !== undefined) ? '-' + claveDia(filtro.dia).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '') : '';
+  var fn = 'pedido' + sufijo + '-' + state.loc + '-' + ($('fecha').value || todayISO()) + '.pdf';
+  try { doc.save(fn); toast('PDF del pedido generado'); } catch (e) { toast('No se pudo guardar el PDF'); }
+}
+
 function generatePDF(soloPedido, filtro) {
   if (typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF) {
     toast('No se ha podido cargar el generador de PDF');
     return;
   }
+  if (soloPedido) { generatePDFPedido(filtro); return; }
   var doc = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   var W = doc.internal.pageSize.getWidth();
   var H = doc.internal.pageSize.getHeight();
